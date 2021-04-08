@@ -1,0 +1,16 @@
+Ethan Coyle 
+Program 3 Computing GCD and LCM 
+
+There are : 10 Cases. 
+
+   MAX GCD   MIN LCM
+         6       600
+        20        20
+         1        35
+        15        75
+        17        32
+        17        32
+        34        32
+         9         9
+      1000      1000
+      2400        60
