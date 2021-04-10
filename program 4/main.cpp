@@ -87,8 +87,21 @@ void openFiles(ofstream& OutFile)
 
 
 
-
-
+///////////////////////////////////////////////////////
+//function name =                                    //
+// -int* GenerateValues(int n)                       //
+//                                                   //
+// parameters                                        //
+// - takes in integer parameters                     //
+//                                                   //
+//what does it do?                                   //
+//	- the purpose of this is to create a dynamically //
+//	- allocated array full of random numbers to      //
+//	- compute the time complexity                    //
+//return value                                       //
+//                                                   //
+//	- this functin return the array of rand nums     //
+///////////////////////////////////////////////////////
 int* GenerateValues(int n) 
 {
 	int* Array = new int[n];
@@ -98,7 +111,20 @@ int* GenerateValues(int n)
 	}
 	return Array;
 }
-
+///////////////////////////////////////////////////////
+//function name =                                    //
+// -int* copyValues(int* Array, int n)               //
+//                                                   //
+// parameters                                        //
+// - takes in integer and pointer to int array       //
+//                                                   //
+//what does it do?                                   //
+//	- the purpose of this funct. is                  //
+//  - copy the values over into a new array          //
+//return value                                       //
+//                                                   //
+//	- this functin return copy array of rand nums    //
+///////////////////////////////////////////////////////
 int* copyValues(int* Array, int n)
 {
 	int* copyarr = new int[n];
@@ -109,7 +135,24 @@ int* copyValues(int* Array, int n)
 	return copyarr;
 }
 
-
+///////////////////////////////////////////////////////
+//function name =                                    //
+// -void TimeComplexity(ofstream& OutFile,           //
+//  long long p)                                     //
+//                                                   //
+// parameters                                        //
+// - takes the outfile streaming and the rand num    //
+// -  and uses this number to compute time complex   //
+//                                                   //
+//what does it do?                                   //
+//	- the purpose of this is to take in the long     //
+//  - long number and compute time complexity        //
+//return value                                       //
+//                                                   //
+//	- this function doesnt return anything (void)    //
+// - however it will be called and passes the print  //
+// - value of computed time back to main             //
+///////////////////////////////////////////////////////
 void TimeComplexity(ofstream& OutFile, long long p)
 {
 	long long TimeResult[7];
@@ -191,7 +234,7 @@ long long iBinSearch(int Array[], long long l, long long r, long long x)
 {
 	while (l <= r) 
 	{
-		int m = l + (r - l) / 2;
+		long long m = l + (r - l) / 2;
 
 		// Check if x is present at Middle
 		if (Array[m] == x)
