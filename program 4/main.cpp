@@ -1,12 +1,29 @@
+////////////////////////////////////////////////////
+//   Author:       Ethan Coyle                    //
+//   Class:        Discrete Data Structures       //
+//   Professor:    Dr.StringFellow                //
+//   Program 4:    Algorithm Timing Comparisons   //
+//   Due Date:     April 23,2021                  //
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+//                                                //
+// The overview of this program is that we are    //
+// goint to be perfomring recursive and iterative //
+// searches on an array of alloted values and then//
+// calculating the time complexity that it takes  //
+// to perform each search and display to the view //
+// of the user in a nice easy to read format in an//
+//output file                                     //
+////////////////////////////////////////////////////
+
 #include <iostream> // user input/output
 #include <fstream> // file streaming
 #include <iomanip>   //for output manipulation
 #include <stdlib.h> //srand, rand
-#include <chrono>
+#include <chrono>    //for the start and stop time
 #include <time.h>    //clock, clock_t
-#include <cassert>
-#include<cmath>
-
+#include <cassert> //ensure that is true values
+#include<cmath> // perfomring the log math
 
 using namespace std;
 
@@ -14,14 +31,14 @@ using namespace std;
 void openFiles(ofstream& OutFile);
 void printPageHeading(ofstream& OutFile,int x);
 void printColumnHeadings(ofstream& OutFile);
-
 //function prototypes for the rand number sorting
-long long iBinSearch(int Array[], long long, long long , long long );
-long long rBinSearch(int Array[], long long, long long , long long );
+long long iBinSearch(int Array[], long long,
+	long long , long long );
+long long rBinSearch(int Array[], long long,
+	long long , long long );
 void IMergeSort(int Array[], long long );
 void RMergeSort(int Array[], long long, long long);
-//void Merge(int* x, long left, long m, long right);
-void Merge(int, long long, long long, long long);
+void Merge(int*, long long, long long, long long);
 void TimeComplexity(ofstream& OutFile, long long);
 
 //function prototype to create values and check time
@@ -34,10 +51,13 @@ int sizes[] = { 100,1000,10000,100000,1000000 };
 
 int main()
 {
-	srand(time(NULL));
+	srand(time(NULL)); //set time to null
 
 	ofstream OutFile;
 	openFiles(OutFile);// prompt for input output
+
+	//for each iteration of the ouput(i.e 5
+	//print out the header and the string output
 
 	for (int p = 0;p < 5; p++)
 	{
@@ -85,23 +105,23 @@ void openFiles(ofstream& OutFile)
 	OutFile.open(outFileName);
 }
 
-
-
-///////////////////////////////////////////////////////
-//function name =                                    //
-// -int* GenerateValues(int n)                       //
-//                                                   //
-// parameters                                        //
-// - takes in integer parameters                     //
-//                                                   //
-//what does it do?                                   //
+//now we will generate out rand numbers
+///////////////////////////////////////////////////////////
+//function name =                                        //
+// -int* GenerateValues(int n)                           //
+//                                                       //
+// parameters                                            //
+// - takes in integer parameters                         //
+//                                                       //
+//what does it do?                                       //
 //	- the purpose of this is to create a dynamically //
 //	- allocated array full of random numbers to      //
 //	- compute the time complexity                    //
-//return value                                       //
-//                                                   //
+//return value                                           //
+//                                                       //
 //	- this functin return the array of rand nums     //
-///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
 int* GenerateValues(int n) 
 {
 	int* Array = new int[n];
@@ -119,11 +139,11 @@ int* GenerateValues(int n)
 // - takes in integer and pointer to int array       //
 //                                                   //
 //what does it do?                                   //
-//	- the purpose of this funct. is                  //
+//	- the purpose of this funct. is              //
 //  - copy the values over into a new array          //
 //return value                                       //
 //                                                   //
-//	- this functin return copy array of rand nums    //
+//	- this functin return copy array of rand nums//
 ///////////////////////////////////////////////////////
 int* copyValues(int* Array, int n)
 {
@@ -145,11 +165,11 @@ int* copyValues(int* Array, int n)
 // -  and uses this number to compute time complex   //
 //                                                   //
 //what does it do?                                   //
-//	- the purpose of this is to take in the long     //
+//	- the purpose of this is to take in the long //
 //  - long number and compute time complexity        //
 //return value                                       //
 //                                                   //
-//	- this function doesnt return anything (void)    //
+//	- this function doesnt return anything (void)//
 // - however it will be called and passes the print  //
 // - value of computed time back to main             //
 ///////////////////////////////////////////////////////
@@ -158,16 +178,22 @@ void TimeComplexity(ofstream& OutFile, long long p)
 	long long TimeResult[7];
 	long long  n = sizes[p];
 	long long nlogn = (long long)((double)n * log2(n));
+
 	TimeResult[0] = n;
 	TimeResult[1] = nlogn;
 	TimeResult[4] = n * n;
 	int* Array = GenerateValues(n);
 	int* CopiedArray = copyValues(Array, n);
 
-	chrono::steady_clock::time_point begin = chrono::steady_clock::now();
+	chrono::steady_clock::time_point begin = chrono::
+		steady_clock::now();
 	IMergeSort(Array, n);
-	chrono::steady_clock::time_point end = chrono::steady_clock::now();
-	TimeResult[5] = chrono::duration_cast<chrono::nanoseconds>
+
+	chrono::steady_clock::time_point end = chrono::
+		steady_clock::now();
+
+	TimeResult[5] = chrono::duration_cast<chrono::
+		nanoseconds>
 		(end - begin).count();
 
 
@@ -193,9 +219,12 @@ void TimeComplexity(ofstream& OutFile, long long p)
 
 	for (int i = 1; i < n; i++) 
 	{
+		//ASSERT FUNCTIONS main purpose is to ensure that it is
+		//true values being passed
 		assert(Array[i] >= Array[i - 1]);
 		assert(CopiedArray[i] >= CopiedArray[i - 1]);
 	}
+	//for each result print out the result to the outfile
 	for (long long i = 0; i < 7; i++)
 	{
 		OutFile << setw(15) << TimeResult[i];
@@ -206,31 +235,84 @@ void TimeComplexity(ofstream& OutFile, long long p)
 	delete[] CopiedArray;
 }
 
+
+/////////////////////////////////////////////////////
+// function name                                   //
+// -void printPageHeading(ofstream& OutFile, int x)//
+//                                                 //
+// parameters-                                     //
+// -streaming to the outfile and iterative throuthg//
+// -the five iterations                            //
+//                                                 //
+// what it does-                                   //
+// -the purpose of this function is to print       //
+// -the header for output                          //
+//                                                 //
+// return type-null(doesnt return value just prints//
+/////////////////////////////////////////////////////
+
 //print page and column headings
 void printPageHeading(ofstream& OutFile, int x)
 {
 	OutFile << " Ethan Coyle" << '\n';
-	OutFile << " Program 4 Algorithm Timing Comparisons" << '\n';
-	//iterate through all of the tests
-	OutFile << "Time Complexity " << x << ": " << '\n';
+	OutFile << " Program 4 Algorithm"<<
+		" Timing Comparisons" << '\n';
+	//iterate through all 5 cases
+	OutFile << "Time Complexity " << x <<
+		": " <<'\n';
 }
+/////////////////////////////////////////////////////
+// function name                                   //
+// -void printColumnHeadings(ofstream& OutFile)    //
+//                                                 //
+// parameters-                                     //
+// -streaming to the outfile                       //
+//                                                 //
+// what it does-                                   //
+// -the purpose of this function is to print       //
+// -string heading to output file for each time    //
+// -complexity                                     //
+//                                                 //
+// return type-null(doesnt return value just prints//
+/////////////////////////////////////////////////////
 
 //print  column headings
 void printColumnHeadings(ofstream& OutFile)
 {
-	string s[] = { "n","nlogn" , "iBin" , "rBin" , "n^2" ,
-		"iMerge" , "rMerge" };
+	//string output
+	string s[] = { "n","nlogn" , "iBin" ,
+		"rBin" , "n^2" ,"iMerge" , "rMerge" };
+
+	//for all of the time complexities
 	for (int i = 0; i < 7; i++)
 	{
 		OutFile << setw(15) << s[i];
 	}
 	OutFile << '\n';
-	OutFile << "             ----------------------------------------" <<
-		"----------------------------------------------------------\n";
+	OutFile << "             -----------------------"<<
+		"-------------------------------------------"<<
+		"--------------------------------\n";
 }
 
+////////////////////////////////////////////////////////////
+//function name-                                          //
+//-long long iBinSearch(int Array[], long long l,         //
+//  long long r, long long x)                             //
+//                                                        //
+//parameters-                                             //
+//- acceots the pointer to array,left,right and the number//
+//                                                        //
+// what it does-                                          //
+//- the purpose of this function                          //
+//-is to perform a iterative  binary search on the array  //
+//                                                        //
+// return type-                                           //
+// -this function returns the recursive middle value of   //
+//     array  if present                                  //
+////////////////////////////////////////////////////////////
 //Perform iterative binary search for the key in the array
-long long iBinSearch(int Array[], long long l, long long r, long long x)
+long long iBinSearch(int Array[], long long l, 
+	long long r, long long x)
 {
 	while (l <= r) 
 	{
@@ -249,45 +331,75 @@ long long iBinSearch(int Array[], long long l, long long r, long long x)
 			r = m - 1;
 	}
 
-	// if we reach here, then element was
-	// not present
+	// retun -1 if not present
 	return -1;
 }
 
-//Perform recursive binary search for the key in the array
-long long rBinSearch(int Array[], long long l, long long r, long long x)
+////////////////////////////////////////////////////////////
+//function name-                                          //
+//-long long rBinSearch(int Array[], long long l,         //
+//  long long r, long long x)                             //
+//                                                        //
+//parameters-                                             //
+//- acceots the pointer to array,left,right and the number//
+//                                                        //
+// what it does-                                          //
+//- the purpose of this function                          //
+//-is to perform a recursive binary search on the array   //
+//                                                        //
+// return type-                                           //
+// -this function returns the recursive middle value of   //
+//     array                                              //
+////////////////////////////////////////////////////////////
+
+//Perform recursive binary search for specified value in array
+long long rBinSearch(int Array[], long long l, 
+	long long r, long long x)
 {
 	if (r >= l) 
 	{
 		long long Middle = l + (r - l) / 2;
 
 		// If the element is present at the middle
-		// itself
+		// return value
 		if (Array[Middle] == x)
 			return Middle;
 
-		// If element is smaller than Middle, then
-		// it can only be present in left subarray
+		// If element is smaller than mid, can only
+		//be in left sub array
 		if (Array[Middle] > x)
 			return rBinSearch(Array, l, Middle - 1, x);
 
-		// Else the element can only be present
-		// in right subarray
+		// Else it is in the right subarray
 		return rBinSearch(Array, Middle + 1, r, x);
 	}
 
-	// We reach here when element is not
-	// present in array
+	//if the value not in array return -1
 	return -1;
 }
 
-
-
+////////////////////////////////////////////////////////////
+//function name-                                          //
+//-void Merge(int* x, long long left, long long m,        //
+//  long long  right)                                     //
+//                                                        //
+//parameters-                                             //
+//- accepts the pointer to array val. left rihgt and      //
+//  middle  using long long for computation               //
+//                                                        //
+// what it does-                                          //
+//- the purpose of this function is to perform a          //
+//  merge sort on the alotted array using left,middle     //
+// and right to sort the array and Merge two sorted       //
+// halves of an array                                     //
+//                                                        //
+//this returns nothing because it is void                 //
+////////////////////////////////////////////////////////////
 
 //now for merge sorts
-// 
-//Merge two sorted halves of an array
-void Merge(int* x, long long left, long long m, long long  right)
+
+void Merge(int* x, long long left, long long m,
+	long long  right)
 {
 	//determine sizes of two sorted parts
 	long long  n1 = m - left + 1;
@@ -342,36 +454,67 @@ void Merge(int* x, long long left, long long m, long long  right)
 	delete[] Left;
 	delete[] Right;
 }
-
+////////////////////////////////////////////////////////////
+//function name-                                          //
+//-void IMergeSort(int Array[], long long n)              //
+//                                                        //
+//parameters-                                             //
+//- acceots the array or random long long number          //
+//                                                        //
+// what it does-                                          //
+//- the purpose of this function is to                    //
+// - perfrom a mergesort inductvely by reading the current//
+// -size of the array and then merge the middle right and //
+// left of the sorted array                               //
+//                                                        //
+//this returns nothing because it is void                 //
+////////////////////////////////////////////////////////////
 void IMergeSort(int Array[], long long n)
 {
 	long long CurrentSize;//current size to merge
 	long long Left; //leftsub array to merge
 
-	for (CurrentSize = 1; CurrentSize <= n - 1; CurrentSize = 2 * CurrentSize)
+	for (CurrentSize = 1; CurrentSize <= n - 1; CurrentSize = 
+		2 * CurrentSize)
 	{
-		// Pick starting point of different subarrays of current size
+		// choose start pt. of different sub array
+		//of current size
 		for (Left = 0; Left < n - 1; Left += 2 * CurrentSize)
 		{
-			// Find ending point of left subarray. Middle+1 is starting
-			// point of right
+			//fin the end point of left sub array
 			int Middle = min(Left + CurrentSize - 1, n - 1);
 
 			int Right = min(Left + 2 * CurrentSize - 1, n - 1);
 
-			// Merge Subarrays Array[Left...Middle] & Array[Middle+1...Right]
+			// Merge Subarrays Array[Left...Middle] & Array
+			//[Middle+1...Right]
 			Merge(Array, Left, Middle, Right);
 		}
 	}
 }
 
+////////////////////////////////////////////////////////////
+//function name-                                          //
+//-void RMergeSort(int Array[], long long l, long long r) //
+//                                                        //
+//parameters-                                             //
+//- acceots the array or random long long numbers,        //
+//       left and right values                            //
+//                                                        //
+// what it does-                                          //
+//- the purpose of this function is to perform a          //
+//  recursive merge sort  and call the function           //
+//  merge to access the array                             //
+//                                                        //
+//this returns nothing because it is void                 //
+////////////////////////////////////////////////////////////
+
 void RMergeSort(int Array[], long long l, long long r)
 {
+	
 	if (l < r)
 	{
-
-		// Same as (l+r)/2 but avoids
-		// overflow for large l & h
+		//perform the recursive merge sorts
 		long long m = l + (r - l) / 2;
 		RMergeSort(Array, l, m);
 		RMergeSort(Array, m + 1, r);
