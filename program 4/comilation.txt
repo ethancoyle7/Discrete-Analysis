@@ -1,0 +1,10 @@
+Build started...
+1>------ Build started: Project: DiscreteProg4, Configuration: Debug Win32 ------
+1>Coyle_Prog4Recursion.cpp
+1>C:\Users\ethan\Desktop\Discrete 2021\DiscreteProg4\DiscreteProg4\Coyle_Prog4Recursion.cpp(128,26): warning C4244: 'initializing': conversion from '__int64' to 'unsigned int', possible loss of data
+1>C:\Users\ethan\Desktop\Discrete 2021\DiscreteProg4\DiscreteProg4\Coyle_Prog4Recursion.cpp(151,27): warning C4244: 'initializing': conversion from '__int64' to 'unsigned int', possible loss of data
+1>C:\Users\ethan\Desktop\Discrete 2021\DiscreteProg4\DiscreteProg4\Coyle_Prog4Recursion.cpp(409,11): warning C4244: 'initializing': conversion from '__int64' to 'long', possible loss of data
+1>C:\Users\ethan\Desktop\Discrete 2021\DiscreteProg4\DiscreteProg4\Coyle_Prog4Recursion.cpp(410,10): warning C4244: 'initializing': conversion from '__int64' to 'long', possible loss of data
+1>DiscreteProg4.vcxproj -> C:\Users\ethan\Desktop\Discrete 2021\DiscreteProg4\Debug\DiscreteProg4.exe
+1>Done building project "DiscreteProg4.vcxproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
