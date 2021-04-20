@@ -26,6 +26,8 @@
 #include<cmath> // perfomring the log math
 
 using namespace std;
+//typedef unsigned long int long;
+//typedef unsigned long long int long long;
 
 const int MAXSIZES = 5;
 //function prototypes for the file and heading print
@@ -52,7 +54,7 @@ int main()
 {
 	//time cannot be negative
 	srand((unsigned)time(NULL)); //set time to null
-	
+
 	ofstream OutFile;
 	openFiles(OutFile);// prompt for input output
 
@@ -125,7 +127,7 @@ void openFiles(ofstream& OutFile)
 
 long* GenerateValues(long long n)
 {
-	long* Array = new long [n];
+	long* Array = new long[n];
 	for (int i = 0;i < n;i++)
 	{
 		Array[i] = rand();
@@ -149,7 +151,7 @@ long* GenerateValues(long long n)
 long* copyValues(long* Array, long long n)
 {
 	long* copyarr = new long[n];
-	for (long  i = 0;i < n;i++)
+	for (long i = 0;i < n;i++)
 	{
 		copyarr[i] = Array[i];
 	}
@@ -227,7 +229,7 @@ void TimeEvaluation(ofstream& OutFile, long long p)
 	TimeResult[2] = chrono::duration_cast<chrono::nanoseconds>
 		(end - begin).count();
 
-	
+
 	//for each result print out the result to the outfile
 	for (long long i = 0; i < 7; i++)
 	{
